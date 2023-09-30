@@ -2,8 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# Commit 1
-
 def clean_data(file_path):
     """
     Clean the financial data by removing specific rows and columns.

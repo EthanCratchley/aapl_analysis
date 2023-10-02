@@ -7,10 +7,7 @@ df = pd.read_csv('/Users/ethancratchley/desktop/appl_income_03.csv')
 # Transpose the DataFrame to swap rows with columns
 df_transposed = df.T
 
-# To Do: Calculate Stats for: Net Income, Diluted Shares Outstanding 
-
 # Descriptive Statistics:
-
 descriptive_stats = []
 
 # -------------------------------------------------------------------------
@@ -49,6 +46,8 @@ print('Median Revenue: ${:.2f}'.format(median_sales))
 print('Standard Deviation of Revenue: ${:.2f}'.format(std_sales))
 print(f"Minimum Revenue: ${min_sales:.2f} in the year {min_sales_year}")
 print(f"Maximum Revenue: ${max_sales:.2f} in the year {max_sales_year}")
+print('-------------------------------------------------------------------------')
+
 
 # -------------------------------------------------------------------------
 
@@ -86,6 +85,8 @@ print('Median COGS: ${:.2f}'.format(median_cogs))
 print('Standard Deviation of COGS: ${:.2f}'.format(std_cogs))
 print(f"Minimum COGS: ${min_cogs:.2f} in the year {min_cogs_year}")
 print(f"Maximum COGS: ${max_cogs:.2f} in the year {max_cogs_year}")
+print('-------------------------------------------------------------------------')
+
 
 # -------------------------------------------------------------------------
 
@@ -123,6 +124,7 @@ print('Median Gross Income: ${:.2f}'.format(median_grossi))
 print('Standard Deviation of Gross Income: ${:.2f}'.format(std_grossi))
 print(f"Minimum Gross Income: ${min_grossi:.2f} in the year {min_grossi_year}")
 print(f"Maximum Gross Income: ${max_grossi:.2f} in the year {max_grossi_year}")
+print('-------------------------------------------------------------------------')
 
 # -------------------------------------------------------------------------
 
@@ -160,4 +162,47 @@ print('Median Net Income: ${:.2f}'.format(median_neti))
 print('Standard Deviation of Net Income: ${:.2f}'.format(std_neti))
 print(f"Minimum Net Income: ${min_neti:.2f} in the year {min_neti_year}")
 print(f"Maximum Net Income: ${max_neti:.2f} in the year {max_neti_year}")
+print('-------------------------------------------------------------------------')
+
+# -------------------------------------------------------------------------
+
+# Calculate Stats for Diluted Shares Outstanding
+
+# Select Row:
+shares_data = df_transposed.iloc[1:, 39]
+
+# Convert the Diluted Shares Outstanding data to numeric, errors='coerce' will replace non-numeric values with NaN
+shares_data = pd.to_numeric(shares_data, errors='coerce')
+
+# Calculate the Stats
+mean_shares = shares_data.mean()
+median_shares = shares_data.median()
+std_shares = shares_data.std()
+
+# Get Min and Max with the corresponding year
+min_shares = shares_data.min()
+min_shares_year = shares_data.idxmin()
+max_shares = shares_data.max()
+max_shares_year = shares_data.idxmax()
+
+# Append to Stats List:
+descriptive_stats.append(mean_shares)
+descriptive_stats.append(median_shares)
+descriptive_stats.append(std_shares)
+descriptive_stats.append(min_shares)
+descriptive_stats.append(min_shares_year)
+descriptive_stats.append(max_shares)
+descriptive_stats.append(max_shares_year)
+
+# Print Stats:
+print('Mean Diluted Shares Oustanding: ${:.2f}'.format(mean_shares))
+print('Median Diluted Shares Oustanding: ${:.2f}'.format(median_shares))
+print('Standard Deviation of Diluted Shares Oustanding: ${:.2f}'.format(std_shares))
+print(f"Minimum Diluted Shares Oustanding: ${min_shares:.2f} in the year {min_shares_year}")
+print(f"Maximum Diluted Shares Oustanding: ${max_shares:.2f} in the year {max_shares_year}")
+print('-------------------------------------------------------------------------')
+
+
+
+
 

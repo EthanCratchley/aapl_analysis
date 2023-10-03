@@ -45,5 +45,48 @@ metrics = [("Revenue", 0), ("COGS", 3), ("Gross Income", 6), ("Net Income", 29),
 for metric_name, index in metrics:
     descriptive_statistics(df_transposed, index, metric_name)
 
+# Graphing and Data Visualization:
+
+# To Do: Revenue, Sales Growth, COGS Growth, Gross Income, Net Income, Net Income Growth, EPS   
+
+# Function to plot line chart
+def line_chart(df, index, data_name):
+    y_data = df.iloc[1:, index].dropna()  # Removing NaN values
+    y_data = pd.to_numeric(y_data, errors='coerce')
+    x_data = df.iloc[1:, 0]  # Assuming the first column contains the x-values (e.g., years)
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_data, y_data)  
+    plt.xlabel('Year')
+    plt.ylabel(data_name)
+    plt.title(f'Apple {data_name} 2018-2022')
+    plt.xticks(rotation=45)
+    plt.grid(True)
+    plt.show()
+    
+# Function to plot bar chart
+def bar_chart(df, index, data_name):
+    y_data = df.iloc[1:, index].dropna()  # Removing NaN values
+    y_data = pd.to_numeric(y_data, errors='coerce')
+    x_data = df.iloc[1:, 0]  # Assuming the first column contains the x-values (e.g., years)
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(x_data, y_data)  
+    plt.xlabel('Year')
+    plt.ylabel(data_name)
+    plt.title(f'Apple {data_name} 2018-2022')
+    plt.xticks(rotation=45)
+    plt.grid(True)
+    plt.show()
+
+metrics = [("Revenue", 0), ("COGS", 3)]
+
+for data_name, index in metrics:
+    line_chart(df_transposed, index, data_name)
+    bar_chart(df_transposed, index, data_name)
+
+
+
+
 
 

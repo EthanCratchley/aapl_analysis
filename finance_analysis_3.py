@@ -53,24 +53,41 @@ for metric_name, index in metrics:
 # Assuming the first row contains years and should be treated as headers
 df = pd.read_csv('/Users/ethancratchley/desktop/appl_income_03.csv', header=None) 
 
-# Extract years and revenue data from the specific rows and skip the first column
-years = df.iloc[0, 1:][::-1].values   
-revenue = df.iloc[1, 1:][::-1].values 
+# Prompt user for the row index of the data and type of plot
+data_row = int(input("Enter the row index of the data to plot (e.g., 1 for Revenue): "))
+plot_type = input("Enter the type of plot (line or bar): ").lower()
 
-# Plot the data
-plt.plot(years, revenue, marker='o', linestyle='-')
+# Extract years and data based on user input and skip the first column
+# Using ::-1 to reverse the order
+years = df.iloc[0, 1:][::-1].values
+data = df.iloc[data_row, 1:][::-1].values 
+
+# Convert data to numeric, set errors='coerce' to replace non-numeric values with NaN
+data = pd.to_numeric(data, errors='coerce')
+
+# Handle NaN values if necessary - for example, we can replace them with zeros or interpolate
+# Here, let’s replace NaN with zero - you can choose how to handle these as per your requirements
+data = np.nan_to_num(data)
+
+# Create a plot based on user input
+if plot_type == 'line':
+    plt.plot(years, data, marker='o', linestyle='-')
+elif plot_type == 'bar':
+    plt.bar(years, data)
+else:
+    print("Invalid plot type entered. Please enter either 'line' or 'bar'.")
+    exit()
 
 # Label the axes
 plt.xlabel('Years')
-plt.ylabel('Revenue')
-plt.title('Revenue Over Years')
+plt.ylabel(df.iloc[data_row, 0])  # Automatically label y-axis based on the selected data row
+plt.title(f'{df.iloc[data_row, 0]} Over Years')  # Automatically create title based on the selected data row
 
 # Show the grid
 plt.grid(True)
 
 # Show the plot
 plt.show()
-
 
 
 

@@ -50,41 +50,40 @@ for metric_name, index in metrics:
 # To Do: Revenue, Sales Growth, COGS Growth, Gross Income, Net Income, Net Income Growth, EPS   
 
 # Function to plot line chart
-def line_chart(df, index, data_name):
-    data = df.iloc[1:, index]
-    years = df.iloc[0, 1:]  # Corrected this line
-    data = pd.to_numeric(data, errors='coerce')
+# Assuming the first row contains years and should be treated as headers
+df = pd.read_csv('/Users/ethancratchley/desktop/appl_income_03.csv', header=None) 
 
-    plt.figure(figsize=(10, 6))
-    plt.plot(years, data)  
-    plt.xlabel('Year')
-    plt.ylabel(data_name)
-    plt.title(f'{data_name} Over the Years')
-    plt.xticks(rotation=45)
-    plt.grid(True)
-    plt.show()
+# Extract years and revenue data from the specific rows and skip the first column
+years = df.iloc[0, 1:][::-1].values   
+revenue = df.iloc[1, 1:][::-1].values 
 
-# Function to plot bar chart
-def bar_chart(df, index, data_name):
-    data = df.iloc[1:, index]
-    years = df.iloc[0, 1:]  # Corrected this line
-    data = pd.to_numeric(data, errors='coerce')
+# Plot the data
+plt.plot(years, revenue, marker='o', linestyle='-')
 
-    plt.figure(figsize=(10, 6))
-    plt.bar(years, data)
-    plt.xlabel('Year')
-    plt.ylabel(data_name)
-    plt.title(f'{data_name} Over the Years')
-    plt.xticks(rotation=45)
-    plt.grid(True)
-    plt.show()
+# Label the axes
+plt.xlabel('Years')
+plt.ylabel('Revenue')
+plt.title('Revenue Over Years')
 
-# Testing the plotting functions
-df = pd.read_csv('/Users/ethancratchley/desktop/appl_income_03.csv')
-df_transposed = df.T
+# Show the grid
+plt.grid(True)
 
-metrics = [("Revenue", 0), ("COGS", 3)]
+# Show the plot
+plt.show()
 
-for metric_name, index in metrics:
-    line_chart(df_transposed, index, metric_name)
-    bar_chart(df_transposed, index, metric_name)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
